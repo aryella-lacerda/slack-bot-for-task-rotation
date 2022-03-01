@@ -19,9 +19,14 @@ jobs:
           node-version: 14.x
 
       - name: Install dependencies
-        run: yarn bootstrap
+        run: yarn install
 
-      - name: Deploy On Staging
+      - name: Generate .env
+        run: |-
+          echo SLACK_SIGNING_SECRET=${{ secrets.SLACK_SIGNING_SECRET }} >> .env
+          echo SLACK_BOT_TOKEN=${{ secrets.SLACK_BOT_TOKEN }} >> .env
+
+      - name: Deploy to Staging
         uses: serverless/github-action@master
         with:
           args: deploy --stage=staging --verbose
