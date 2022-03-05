@@ -8,10 +8,13 @@ const app = new App({
 });
 
 export const handler = async () => {
+  console.log("SLACK APP START");
   await app.start(process.env.PORT || 3000);
 
-  app.command("/rotate", async ({ payload, ack, say }) => {
+  app.command("/rotate", async ({ payload, ack, say, respond }) => {
     try {
+      console.log("ROTATE COMMAND RECEIVED");
+
       const users = utils.extractUsers(payload.text);
       const task = utils.extractTask(payload.text);
 
@@ -37,6 +40,7 @@ export const handler = async () => {
       await ack();
 
       const usersMentions = utils.formatUserMentions(users);
+      await respond("Rotation created! 🎉");
       await say(
         `set up a daily rotation for ${task}, containing: ${usersMentions}`
       );

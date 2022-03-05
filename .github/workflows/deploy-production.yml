@@ -1,10 +1,9 @@
 name: Production
 
 on:
-  workflow_run:
-    workflows: ["Staging"]
-    branches: [main]
-    types: [completed]
+  push:
+    branches:
+      - main
 
 jobs:
   deploy_production:
