@@ -7,8 +7,9 @@ const app = new App({
   token: process.env.SLACK_BOT_TOKEN,
 });
 
-export const handler = async () => {
-  console.log("SLACK APP START");
+export const handler = async (event, context) => {
+  console.log("SLACK APP START", { event, context });
+
   await app.start(process.env.PORT || 3000);
 
   app.command("/rotate", async ({ payload, ack, say, respond }) => {
