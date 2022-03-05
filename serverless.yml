@@ -38,7 +38,9 @@ functions:
   createRotation:
     handler: handlers/create-rotations.handler
     events:
-      - httpApi: "*"
+      - http:
+          path: slack/events
+          method: post
 
   executeRotation:
     handler: handlers/execute-rotations.handler
