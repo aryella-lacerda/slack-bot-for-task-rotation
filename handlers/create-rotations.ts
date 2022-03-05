@@ -16,18 +16,23 @@ export const handler = async () => {
       const task = utils.extractTask(payload.text);
 
       if (!users || !task) {
+        console.error("INVALID PARAMS", { users, task });
+
         return await ack({
           response_type: "ephemeral",
           text: "Invalid command parameters. Please use template: /rotate a list of users for a task. Example: '/rotate @user1, @user2, and @user3 for daily meeting host'.",
         });
       }
 
-      await database.putRotation({
+      const rotation = {
         task,
         user_list: users,
         next_user: users[0],
         channel_id: payload.channel_id,
-      });
+      };
+
+      console.log("ROTATION", { rotation });
+      await database.putRotation(rotation);
 
       await ack();
 
@@ -36,6 +41,8 @@ export const handler = async () => {
         `set up a daily rotation for ${task}, containing: ${usersMentions}`
       );
     } catch (err) {
+      console.error("UNEXPECTED ERROR", { err });
+
       await ack({
         response_type: "ephemeral",
         text: "An error occurred. Please try again.",
