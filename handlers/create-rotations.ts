@@ -2,6 +2,16 @@ import { App, AwsLambdaReceiver } from "@slack/bolt";
 import * as utils from "../utils";
 import * as database from "../database";
 
+import {
+  UNEXPECTED_ERROR,
+  UNEXPECTED_ERROR_ADVICE,
+  INVALID_PARAMS_ERROR,
+  INVALID_PARAMS_ERROR_ADVICE,
+  CHANNEL_NOT_FOUND_ERROR,
+  CHANNEL_NOT_FOUND_ERROR_ADVICE,
+  ROTATION_LOG,
+} from "./user-messages";
+
 const awsLambdaReceiver = new AwsLambdaReceiver({
   signingSecret: process.env.SLACK_SIGNING_SECRET,
 });
@@ -12,20 +22,24 @@ const app = new App({
   receiver: awsLambdaReceiver,
 });
 
-app.command("/rotate", async ({ payload, ack, respond }) => {
-  try {
-    console.log("ROTATE COMMAND RECEIVED");
+app.command("/rotate", async ({ payload, ack, say, respond }) => {
+  const acknowledge = (msg?: string) =>
+    ack(
+      msg
+        ? {
+            response_type: "ephemeral",
+            text: msg,
+          }
+        : undefined
+    );
 
+  try {
     const users = utils.extractUsers(payload.text);
     const task = utils.extractTask(payload.text);
 
     if (!users || !task) {
-      console.error("INVALID PARAMS", { users, task });
-
-      return await ack({
-        response_type: "ephemeral",
-        text: "Invalid command parameters. Please use template: /rotate a list of users for a task. Example: '/rotate @user1, @user2, and @user3 for daily meeting host'.",
-      });
+      console.error(INVALID_PARAMS_ERROR, { users, task });
+      return acknowledge(INVALID_PARAMS_ERROR_ADVICE);
     }
 
     const rotation = {
@@ -35,25 +49,24 @@ app.command("/rotate", async ({ payload, ack, respond }) => {
       channel_id: payload.channel_id,
     };
 
-    console.log("ROTATION", { rotation });
+    console.log(ROTATION_LOG, { rotation });
     await database.putRotation(rotation);
 
-    await ack();
+    const listOfUserMentions = utils.formatUserMentions(users);
+    const userResponse = "Rotation created! 🎉";
+    const channelResponse = `set up a daily rotation for ${task}, containing: ${listOfUserMentions}`;
 
-    const usersMentions = utils.formatUserMentions(users);
-    await respond("Rotation created! 🎉");
+    await respond(userResponse); // visible only to user
+    await say(channelResponse); // visible to everyone in channel
 
-    await app.client.chat.postMessage({
-      channel: rotation.channel_id,
-      text: `set up a daily rotation for ${task}, containing: ${usersMentions}`,
-    });
+    return acknowledge();
   } catch (err) {
-    console.error("UNEXPECTED ERROR", { err });
+    if (err?.message?.includes(CHANNEL_NOT_FOUND_ERROR)) {
+      return acknowledge(CHANNEL_NOT_FOUND_ERROR_ADVICE);
+    }
 
-    await ack({
-      response_type: "ephemeral",
-      text: "An error occurred. Please try again.",
-    });
+    console.error(UNEXPECTED_ERROR, { err });
+    return acknowledge(UNEXPECTED_ERROR_ADVICE);
   }
 });
 
