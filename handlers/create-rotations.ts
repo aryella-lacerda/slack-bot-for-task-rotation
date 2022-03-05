@@ -12,7 +12,7 @@ const app = new App({
   receiver: awsLambdaReceiver,
 });
 
-app.command("/rotate", async ({ payload, ack, say, respond }) => {
+app.command("/rotate", async ({ payload, ack, respond }) => {
   try {
     console.log("ROTATE COMMAND RECEIVED");
 
@@ -42,9 +42,11 @@ app.command("/rotate", async ({ payload, ack, say, respond }) => {
 
     const usersMentions = utils.formatUserMentions(users);
     await respond("Rotation created! 🎉");
-    await say(
-      `set up a daily rotation for ${task}, containing: ${usersMentions}`
-    );
+
+    await app.client.chat.postMessage({
+      channel: rotation.channel_id,
+      text: `set up a daily rotation for ${task}, containing: ${usersMentions}`,
+    });
   } catch (err) {
     console.error("UNEXPECTED ERROR", { err });
 
