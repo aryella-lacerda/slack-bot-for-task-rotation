@@ -11,6 +11,8 @@ const app = new App({
 });
 
 export const handler = async () => {
+  console.log(`TABLE: ${process.env.ROTATIONS_TABLE}`);
+
   const rotations = (await database.getAllRotations()) as Rotation[];
 
   rotations.forEach(async (rotation) => {
@@ -19,7 +21,7 @@ export const handler = async () => {
       const currentUserIndex = rotation.user_list.indexOf(currentUser);
       const nextUserIndex = (currentUserIndex + 1) % rotation.user_list.length;
 
-      console.log("CURRENT AND NEXT", {
+      console.log("CURRENT AND NEXT USERS", {
         userList: rotation.user_list,
         currentUser,
         currentUserIndex,
@@ -31,10 +33,14 @@ export const handler = async () => {
         text: `<${currentUser}>, you're up for ${rotation.task}!`,
       });
 
+      console.log("NOTIFICATION POSTED");
+
       await database.putRotation({
         ...rotation,
         next_user: rotation.user_list[nextUserIndex],
       });
+
+      console.log("ROTATION ITEM UPDATED");
     } catch (err) {
       console.error(UNEXPECTED_ERROR, { err });
     }
