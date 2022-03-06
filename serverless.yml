@@ -45,7 +45,7 @@ functions:
   executeRotation:
     handler: handlers/execute-rotations.handler
     events:
-      - schedule: cron(0/2 * ? * * *)
+      - schedule: cron(0 12 * * MON-FRI *)
 
 resources:
   Resources:
