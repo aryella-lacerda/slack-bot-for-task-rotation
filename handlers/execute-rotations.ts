@@ -12,10 +12,9 @@ const app = new App({
 
 export const handler = async () => {
   console.log(`TABLE: ${process.env.ROTATIONS_TABLE}`);
-
   const rotations = (await database.getAllRotations()) as Rotation[];
 
-  rotations.forEach(async (rotation) => {
+  for (let rotation of rotations) {
     try {
       const currentUser = rotation.next_user;
       const currentUserIndex = rotation.user_list.indexOf(currentUser);
@@ -44,5 +43,5 @@ export const handler = async () => {
     } catch (err) {
       console.error(UNEXPECTED_ERROR, { err });
     }
-  });
+  }
 };

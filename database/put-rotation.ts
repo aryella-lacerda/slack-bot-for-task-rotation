@@ -15,10 +15,7 @@ export const putRotation = async (
       id: uuid(),
       created_at: dayjs().toISOString(),
       next_rotation_at: dayjs().add(1, "day").toISOString(),
-      task: rotation.task,
-      user_list: rotation.user_list,
-      channel_id: rotation.channel_id,
-      next_user: rotation.next_user,
+      ...rotation,
     },
   };
 
