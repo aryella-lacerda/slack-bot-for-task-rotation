@@ -1,6 +1,7 @@
 import AWS, { DynamoDB } from "aws-sdk";
-AWS.config.update({ region: "us-east-1" });
+import { Rotation } from "../entities/rotation";
 
+AWS.config.update({ region: "us-east-1" });
 const dynamodb = new DynamoDB.DocumentClient();
 
 export const getAllRotations = async () => {
@@ -11,5 +12,5 @@ export const getAllRotations = async () => {
     })
     .promise();
 
-  return rotations.Items;
+  return rotations.Items as Rotation[];
 };

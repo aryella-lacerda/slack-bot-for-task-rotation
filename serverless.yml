@@ -53,17 +53,26 @@ resources:
       Type: AWS::DynamoDB::Table
       DeletionPolicy: Retain
       Properties:
+        TableName: ${self:custom.tableName}
         AttributeDefinitions:
           - AttributeName: id
             AttributeType: S
           - AttributeName: next_rotation_at
+            AttributeType: S
+          - AttributeName: channel_id
             AttributeType: S
         KeySchema:
           - AttributeName: id
             KeyType: HASH
           - AttributeName: next_rotation_at
             KeyType: RANGE
+        GlobalSecondaryIndexes:
+          - IndexName: 'ByChannelId',
+            KeySchema: 
+              - AttributeName: 'channel_id',
+                KeyType: 'HASH',
+            Projection: 
+              - ProjectionType: 'ALL',
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
-        TableName: ${self:custom.tableName}

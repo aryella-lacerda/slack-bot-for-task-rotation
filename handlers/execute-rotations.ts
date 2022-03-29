@@ -12,7 +12,7 @@ const app = new App({
 
 export const handler = async () => {
   console.log(`TABLE: ${process.env.ROTATIONS_TABLE}`);
-  const rotations = (await database.getAllRotations()) as Rotation[];
+  const rotations = await database.getAllRotations();
 
   for (let rotation of rotations) {
     try {
