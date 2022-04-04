@@ -15,7 +15,7 @@ jobs:
           node-version: 14.x
 
       - name: Install dependencies
-        run: yarn bootstrap
+        run: yarn
 
       # - name: Linting
       #   run: yarn lint
@@ -23,5 +23,5 @@ jobs:
       # - name: Typescript check
       #   run: yarn typecheck
 
-      - name: Unit Test
-        run: yarn test
+      # - name: Unit Test
+      #   run: yarn test

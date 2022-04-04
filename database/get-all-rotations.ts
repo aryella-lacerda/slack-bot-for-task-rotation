@@ -1,7 +1,6 @@
-import AWS, { DynamoDB } from "aws-sdk";
-AWS.config.update({ region: "us-east-1" });
+import { getDynamoDBClient } from "./get-dynamodb-client";
 
-const dynamodb = new DynamoDB.DocumentClient();
+const dynamodb = getDynamoDBClient();
 
 export const getAllRotations = async () => {
   const rotations = await dynamodb
