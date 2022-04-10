@@ -71,13 +71,13 @@ resources:
         AttributeDefinitions:
           - AttributeName: id
             AttributeType: S
-          - AttributeName: next_rotation_at
-            AttributeType: S
+          # - AttributeName: next_rotation_at
+          #   AttributeType: S
         KeySchema:
           - AttributeName: id
             KeyType: HASH
-          - AttributeName: next_rotation_at
-            KeyType: RANGE
+          # - AttributeName: next_rotation_at
+          #   KeyType: RANGE
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1

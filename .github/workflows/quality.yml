@@ -23,5 +23,5 @@ jobs:
       # - name: Typescript check
       #   run: yarn typecheck
 
-      # - name: Unit Test
-      #   run: yarn test
+      - name: Unit Test
+        run: yarn test
