@@ -7,6 +7,7 @@ custom:
     # Accepted stages must be whitelisted for DynamoDB Local
     stages:
       - staging
+      - development
     start:
       port: 8000
       migrate: true
@@ -57,6 +58,13 @@ functions:
           path: slack/events
           method: post
 
+  listRotations:
+    handler: handlers/list-rotations.handler
+    events:
+      - http:
+          path: slack/events/rotations/list
+          method: post
+
   executeRotation:
     handler: handlers/execute-rotations.handler
     events:
@@ -68,17 +76,29 @@ resources:
       Type: AWS::DynamoDB::Table
       DeletionPolicy: Retain
       Properties:
+        TableName: ${self:custom.tableName}
         AttributeDefinitions:
           - AttributeName: id
             AttributeType: S
           - AttributeName: next_rotation_at
+            AttributeType: S
+          - AttributeName: channel_id
             AttributeType: S
         KeySchema:
           - AttributeName: id
             KeyType: HASH
           - AttributeName: next_rotation_at
             KeyType: RANGE
+        GlobalSecondaryIndexes:
+          - IndexName: "ByChannelId"
+            KeySchema:
+              - AttributeName: "channel_id"
+                KeyType: "HASH"
+            Projection:
+              ProjectionType: "ALL"
+            ProvisionedThroughput:
+              ReadCapacityUnits: 1
+              WriteCapacityUnits: 1
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
-        TableName: ${self:custom.tableName}

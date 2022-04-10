@@ -1,5 +1,6 @@
 import { getDynamoDBClient } from "./get-dynamodb-client";
-import { ScanCommand } from "@aws-sdk/lib-dynamodb"; // ES6 import
+import { ScanCommand } from "@aws-sdk/lib-dynamodb";
+import { Rotation } from "../entities/rotation";
 
 const dynamodb = getDynamoDBClient();
 
@@ -10,5 +11,6 @@ export const getAllRotations = async () => {
       Select: "ALL_ATTRIBUTES",
     })
   );
-  return rotations.Items;
+
+  return rotations.Items as Rotation[];
 };
