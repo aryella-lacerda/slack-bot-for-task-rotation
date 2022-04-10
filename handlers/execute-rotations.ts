@@ -1,8 +1,5 @@
 import * as database from "../database";
-
-import { Rotation } from "../entities/rotation";
 import { App } from "@slack/bolt";
-
 import { UNEXPECTED_ERROR } from "./user-messages";
 
 const app = new App({
@@ -16,7 +13,6 @@ export const handler = async () => {
     app.client.chat.postMessage = async () => {};
   }
 
-  console.log(`TABLE: ${process.env.ROTATIONS_TABLE}`);
   const rotations = await database.getAllRotations();
 
   for (let rotation of rotations) {

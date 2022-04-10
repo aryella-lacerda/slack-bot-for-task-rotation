@@ -7,6 +7,7 @@ custom:
     # Accepted stages must be whitelisted for DynamoDB Local
     stages:
       - staging
+      - development
     start:
       port: 8000
       migrate: true
@@ -55,6 +56,13 @@ functions:
     events:
       - http:
           path: slack/events
+          method: post
+
+  listRotations:
+    handler: handlers/list-rotations.handler
+    events:
+      - http:
+          path: slack/events/rotations/list
           method: post
 
   executeRotation:

@@ -1,9 +1,11 @@
 {
   "name": "slack-bot-for-task-rotation",
-  "version": "0.0.3",
+  "version": "0.0.1",
   "description": "",
   "scripts": {
-    "start": "yarn serverless offline --httpPort=3000",
+    "start:ngrok": "ngrok http 3000",
+    "start:dynamodb": "yarn sls dynamodb start --stage development",
+    "start:offline": "yarn serverless offline --httpPort=3000 --stage development --noPrependStageInUrl",
     "deploy:staging": "yarn serverless deploy --stage staging",
     "deploy:production": "yarn serverless deploy --stage production",
     "test": "yarn jest"
