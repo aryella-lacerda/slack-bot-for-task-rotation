@@ -1,5 +1,6 @@
 import { getDynamoDBClient } from "./get-dynamodb-client";
-import { PutCommand, GetCommand } from "@aws-sdk/lib-dynamodb";
+import { GetCommand } from "@aws-sdk/lib-dynamodb";
+import { putRotation } from "./put-rotation";
 
 const ddb = getDynamoDBClient();
 
@@ -18,18 +19,13 @@ it("should insert item into table", async () => {
   };
 
   //Act
-  await ddb.send(
-    new PutCommand({
-      TableName: process.env.ROTATIONS_TABLE,
-      Item: item,
-    })
-  );
+  await putRotation(item);
 
   //Assert
   const { Item } = await ddb.send(
     new GetCommand({
       TableName: process.env.ROTATIONS_TABLE,
-      Key: { id },
+      Key: { id, next_rotation_at },
     })
   );
 

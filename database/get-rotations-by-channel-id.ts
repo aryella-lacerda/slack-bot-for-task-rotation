@@ -1,23 +1,20 @@
-import AWS, { AWSError, DynamoDB } from "aws-sdk";
-import { PromiseResult } from "aws-sdk/lib/request";
+import { getDynamoDBClient } from "./get-dynamodb-client";
+import { QueryCommand } from "@aws-sdk/lib-dynamodb";
 import { Rotation } from "../entities/rotation";
 
-AWS.config.update({ region: "us-east-1" });
-const dynamodb = new DynamoDB.DocumentClient();
+const dynamodb = getDynamoDBClient();
 
 export const getRotationsByChannelId = async (channelID: string) => {
-  const response = await dynamodb
-    .query({
+  const response = await dynamodb.send(
+    new QueryCommand({
       TableName: process.env.ROTATIONS_TABLE,
       IndexName: "ByChannelId",
-      KeyConditionExpression: "channel_id = :documentNumber",
-      // FilterExpression: "SK = :skValue",
+      KeyConditionExpression: "channel_id = :channelID",
       ExpressionAttributeValues: {
         ":channelID": channelID,
-        // ":skValue": "HR-LEADER",
       },
     })
-    .promise();
+  );
 
   return response.Items as Rotation[];
 };
