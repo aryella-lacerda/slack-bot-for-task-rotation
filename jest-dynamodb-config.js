@@ -1,11 +1,10 @@
-import YAML from "yaml";
-import fs from "fs";
+module.exports = async () => {
+  const { getDynamoDBTables } = require("./.jest/get-dynamodb-tables");
+  const tables = await getDynamoDBTables();
 
-const serverlessYML = fs.readFileSync("./serverless.yml", "utf8");
-const serverlessJSON = YAML.parse(serverlessYML);
-
-console.log(serverlessJSON);
-
-module.exports = {
-  tables: [serverlessJSON.resources.Resources.RotationsTable.Properties],
+  return {
+    tables,
+    port: 8000,
+    options: ["-sharedDb"],
+  };
 };

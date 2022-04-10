@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import { v4 as uuid } from "uuid";
-import { PutItemCommand } from "@aws-sdk/client-dynamodb";
+import { PutCommand } from "@aws-sdk/lib-dynamodb"; // ES6 import
 
 import { Rotation } from "../entities/rotation";
 import { getDynamoDBClient } from "./get-dynamodb-client";
@@ -20,5 +20,5 @@ export const putRotation = async (
     },
   };
 
-  return dynamodb.send(new PutItemCommand(item));
+  return dynamodb.send(new PutCommand(item));
 };

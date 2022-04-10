@@ -1,20 +1,32 @@
-import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
+import { DynamoDB, DynamoDBClient } from "@aws-sdk/client-dynamodb";
+import { DynamoDBDocumentClient } from "@aws-sdk/lib-dynamodb";
 
 const isTest = process.env.JEST_WORKER_ID;
 const isOffline = process.env.IS_OFFLINE;
 
 const devOptions = {
-  region: "localhost",
+  region: "local-env",
   sslEnabled: false,
   endpoint: "http://localhost:8000",
-  accessKeyId: "DEFAULT_ACCESS_KEY",
-  secretAccessKey: "DEFAULT_SECRET",
-  convertEmptyValues: true,
+  credentials: {
+    accessKeyId: "DEFAULT_ACCESS_KEY",
+    secretAccessKey: "DEFAULT_SECRET",
+  },
 };
 
-const options = {
+const prodOptions = {
   region: "us-east-1",
 };
 
-export const getDynamoDBClient = () =>
-  new DynamoDBClient(isTest || isOffline ? devOptions : options);
+const options = isTest || isOffline ? devOptions : prodOptions;
+
+const dynamodb = new DynamoDB(options);
+const dynamodbClient = new DynamoDBClient(options);
+const documentDocumentClient = DynamoDBDocumentClient.from(dynamodbClient, {
+  marshallOptions: {
+    convertEmptyValues: true,
+  },
+});
+
+export const getDynamoDBClient = () => documentDocumentClient;
+export const getDynamoDB = () => dynamodb;

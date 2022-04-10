@@ -1,8 +1,8 @@
 // const { putRotation } = require("./.build/database/put-rotation");
-const { getAllRotations } = require("./.build/database/get-all-rotations");
+// const { getAllRotations } = require("./.build/database/get-all-rotations");
 
-process.env.ROTATIONS_TABLE = "rotations-staging";
-process.env.AWS_REGION = "us-east-1";
+// process.env.ROTATIONS_TABLE = "rotations-staging";
+// process.env.AWS_REGION = "us-east-1";
 
 // const test = async () =>
 //   putRotation({
@@ -12,9 +12,11 @@ process.env.AWS_REGION = "us-east-1";
 //     next_user: "@user.a",
 //   });
 
-const test = async () => {
-  const rotations = await getAllRotations();
-  console.log(rotations);
-};
+// const test = async () => {
+//   const rotations = await getAllRotations();
+//   console.log(rotations);
+// };
 
-test();
+// test();
+
+it.todo("Run test in development");
