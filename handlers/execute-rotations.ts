@@ -11,6 +11,11 @@ const app = new App({
 });
 
 export const handler = async () => {
+  if (process.env.IS_OFFLINE) {
+    // @ts-expect-error //TODO: Add mock server later
+    app.client.chat.postMessage = async () => {};
+  }
+
   console.log(`TABLE: ${process.env.ROTATIONS_TABLE}`);
   const rotations = await database.getAllRotations();
 

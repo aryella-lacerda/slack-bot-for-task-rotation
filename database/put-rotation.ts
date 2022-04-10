@@ -1,10 +1,11 @@
 import dayjs from "dayjs";
-import AWS, { DynamoDB } from "aws-sdk";
 import { v4 as uuid } from "uuid";
-import { Rotation } from "../entities/rotation";
+import { PutCommand } from "@aws-sdk/lib-dynamodb"; // ES6 import
 
-AWS.config.update({ region: "us-east-1" });
-const dynamodb = new DynamoDB.DocumentClient();
+import { Rotation } from "../entities/rotation";
+import { getDynamoDBClient } from "./get-dynamodb-client";
+
+const dynamodb = getDynamoDBClient();
 
 export const putRotation = async (
   rotation: Pick<Rotation, "task" | "user_list" | "channel_id" | "next_user">
@@ -19,5 +20,5 @@ export const putRotation = async (
     },
   };
 
-  return dynamodb.put(item).promise();
+  return dynamodb.send(new PutCommand(item));
 };

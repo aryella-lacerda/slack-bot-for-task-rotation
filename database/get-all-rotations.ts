@@ -1,16 +1,16 @@
-import AWS, { DynamoDB } from "aws-sdk";
+import { getDynamoDBClient } from "./get-dynamodb-client";
+import { ScanCommand } from "@aws-sdk/lib-dynamodb"; // ES6 import
 import { Rotation } from "../entities/rotation";
 
-AWS.config.update({ region: "us-east-1" });
-const dynamodb = new DynamoDB.DocumentClient();
+const dynamodb = getDynamoDBClient();
 
 export const getAllRotations = async () => {
-  const rotations = await dynamodb
-    .scan({
+  const rotations = await dynamodb.send(
+    new ScanCommand({
       TableName: process.env.ROTATIONS_TABLE,
       Select: "ALL_ATTRIBUTES",
     })
-    .promise();
+  );
 
   return rotations.Items as Rotation[];
 };

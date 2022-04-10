@@ -3,6 +3,19 @@ frameworkVersion: "2 || 3"
 
 custom:
   tableName: "rotations-${sls:stage}"
+  dynamodb:
+    # Accepted stages must be whitelisted for DynamoDB Local
+    stages:
+      - staging
+    start:
+      port: 8000
+      migrate: true
+      seed: true
+    seed:
+      test:
+        sources:
+          - table: "rotations-${sls:stage}"
+            sources: [./seed/rotations.json]
   stages:
     - development
     - staging
@@ -10,6 +23,7 @@ custom:
 
 plugins:
   - serverless-plugin-typescript
+  - serverless-dynamodb-local
   - serverless-offline
   - serverless-dotenv-plugin
   - serverless-stage-manager
@@ -33,6 +47,7 @@ provider:
             - Fn::GetAtt: [RotationsTable, Arn]
   environment:
     ROTATIONS_TABLE: ${self:custom.tableName}
+    IS_OFFLINE: true
 
 functions:
   createRotation:
