@@ -25,20 +25,7 @@ app.command("/list-rotations", async ({ payload, ack, respond }) => {
   try {
     const channelID = payload.channel_id;
     const rotations = await database.getRotationsByChannelId(channelID);
-
-    const header = `This channel contains *${rotations.length} rotations*.\n`;
-
-    console.log(header, channelID);
-
-    const rotationDescriptions = rotations.map((rotation) => {
-      const allUsers = utils.formatUserMentions(rotation.user_list);
-      const nextUser = utils.formatUserMentions([rotation.next_user]);
-      return `>- a daily rotation for *${rotation.task}*, containing ${allUsers}. The next one up is ${nextUser}.`;
-    });
-
-    const footer = `\n_You can create another rotation using the /rotate command or delete an existing rotation using the /delete-rotation command_`;
-
-    const userResponse = [header, ...rotationDescriptions, footer].join("\n");
+    const userResponse = utils.formatRotationsList(rotations);
 
     await respond(userResponse); // visible only to user
 

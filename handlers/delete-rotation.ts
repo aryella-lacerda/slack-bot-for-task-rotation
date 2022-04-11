@@ -2,7 +2,12 @@ import { App, AwsLambdaReceiver } from "@slack/bolt";
 import * as utils from "../utils";
 import * as database from "../database";
 
-import { UNEXPECTED_ERROR, UNEXPECTED_ERROR_ADVICE } from "./user-messages";
+import {
+  UNEXPECTED_ERROR,
+  UNEXPECTED_ERROR_ADVICE,
+  ROTATION_NOT_FOUND,
+  ROTATION_DELETED,
+} from "./user-messages";
 
 const awsLambdaReceiver = new AwsLambdaReceiver({
   signingSecret: process.env.SLACK_SIGNING_SECRET,
@@ -18,24 +23,36 @@ app.command("/delete-rotation", async ({ payload, ack, respond }) => {
   const acknowledge = utils.generateAckFunction(ack);
 
   try {
-    const channel_id = payload.channel_id;
+    const channelID = payload.channel_id;
     const task = utils.extractTask(payload.text);
 
-    const toDelete = {
-      task,
-      channel_id,
-    };
+    const rotationsInChannel = await database.getRotationsByChannelId(
+      channelID
+    );
 
-    console.log("DELETE ROTATION", toDelete);
+    const rotationToDelete = rotationsInChannel.find(
+      (rotation) => rotation.task.toLowerCase() === task.toLowerCase()
+    );
 
-    const rotation = await database.getRotationByTask(toDelete);
+    if (!rotationToDelete) {
+      console.log(ROTATION_NOT_FOUND, channelID, task);
+
+      await respond(
+        `Rotation for *${task}* not found. ` +
+          utils.formatRotationsList(rotationsInChannel)
+      ); // visible only to user
+
+      return acknowledge();
+    }
 
     await database.deleteRotation({
-      id: rotation.id,
-      next_rotation_at: rotation.next_rotation_at,
+      id: rotationToDelete.id,
+      next_rotation_at: rotationToDelete.next_rotation_at,
     });
 
-    await respond(`Rotation for ${task} deleted successfully`); // visible only to user
+    console.log(ROTATION_DELETED, rotationToDelete);
+
+    await respond(`Rotation for *${task}* deleted successfully`); // visible only to user
     return acknowledge();
   } catch (err) {
     console.error(UNEXPECTED_ERROR, { err });
