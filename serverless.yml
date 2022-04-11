@@ -65,6 +65,13 @@ functions:
           path: slack/events/rotations/list
           method: post
 
+  deleteRotation:
+    handler: handlers/delete-rotation.handler
+    events:
+      - http:
+          path: slack/events/rotations/delete
+          method: post
+
   executeRotation:
     handler: handlers/execute-rotations.handler
     events:

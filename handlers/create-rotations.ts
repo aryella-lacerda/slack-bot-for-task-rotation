@@ -23,15 +23,7 @@ const app = new App({
 });
 
 app.command("/rotate", async ({ payload, ack, say, respond }) => {
-  const acknowledge = (msg?: string) =>
-    ack(
-      msg
-        ? {
-            response_type: "ephemeral",
-            text: msg,
-          }
-        : undefined
-    );
+  const acknowledge = utils.generateAckFunction(ack);
 
   try {
     const users = utils.extractUsers(payload.text);
