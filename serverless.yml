@@ -84,6 +84,8 @@ resources:
             AttributeType: S
           - AttributeName: channel_id
             AttributeType: S
+          - AttributeName: task
+            AttributeType: S
         KeySchema:
           - AttributeName: id
             KeyType: HASH
@@ -94,6 +96,8 @@ resources:
             KeySchema:
               - AttributeName: "channel_id"
                 KeyType: "HASH"
+              - AttributeName: "task"
+                KeyType: RANGE
             Projection:
               ProjectionType: "ALL"
             ProvisionedThroughput:
