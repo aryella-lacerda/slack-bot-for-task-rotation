@@ -1,11 +1,8 @@
-import * as database from "../database";
-import { App } from "@slack/bolt";
-import { UNEXPECTED_ERROR } from "./user-messages";
+import * as database from "../../database";
+import { UNEXPECTED_ERROR } from "../user-messages";
+import { startSlackApp } from "../start-slack-app";
 
-const app = new App({
-  signingSecret: process.env.SLACK_SIGNING_SECRET,
-  token: process.env.SLACK_BOT_TOKEN,
-});
+const { app } = startSlackApp();
 
 export const handler = async () => {
   if (process.env.IS_OFFLINE) {

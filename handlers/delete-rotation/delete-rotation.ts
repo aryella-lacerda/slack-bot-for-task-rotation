@@ -1,23 +1,15 @@
-import { App, AwsLambdaReceiver } from "@slack/bolt";
-import * as utils from "../utils";
-import * as database from "../database";
+import * as utils from "../../utils";
+import * as database from "../../database";
+import { startSlackApp } from "../start-slack-app";
 
 import {
   UNEXPECTED_ERROR,
   UNEXPECTED_ERROR_ADVICE,
   ROTATION_NOT_FOUND,
   ROTATION_DELETED,
-} from "./user-messages";
+} from "../user-messages";
 
-const awsLambdaReceiver = new AwsLambdaReceiver({
-  signingSecret: process.env.SLACK_SIGNING_SECRET,
-});
-
-const app = new App({
-  signingSecret: process.env.SLACK_SIGNING_SECRET,
-  token: process.env.SLACK_BOT_TOKEN,
-  receiver: awsLambdaReceiver,
-});
+const { app, awsLambdaReceiver } = startSlackApp();
 
 app.command("/delete-rotation", async ({ payload, ack, respond }) => {
   const acknowledge = utils.generateAckFunction(ack);
