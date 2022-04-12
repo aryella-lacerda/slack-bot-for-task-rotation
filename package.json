@@ -8,7 +8,8 @@
     "start:offline": "yarn serverless offline --httpPort=3000 --stage development --noPrependStageInUrl",
     "deploy:staging": "yarn serverless deploy --stage staging",
     "deploy:production": "yarn serverless deploy --stage production",
-    "test": "yarn jest"
+    "test": "yarn jest",
+    "lint": "yarn eslint ."
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.58.0",
@@ -25,7 +26,14 @@
     "@shelf/jest-dynamodb": "^2.2.3",
     "@types/jest": "^27.4.1",
     "@types/uuid": "^8.3.4",
+    "@typescript-eslint/eslint-plugin": "^5.19.0",
+    "@typescript-eslint/parser": "^5.19.0",
     "babel-jest": "^27.5.1",
+    "eslint": "^7.12.1",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
     "jest": "^27.5.1",
     "js-yaml": "^4.1.0",
     "serverless": "^3.2.1",

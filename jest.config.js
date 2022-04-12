@@ -1,4 +1,4 @@
 module.exports = {
-  preset: "@shelf/jest-dynamodb",
-  setupFilesAfterEnv: ["./.jest/jest.setup.ts"],
-};
+  preset: '@shelf/jest-dynamodb',
+  setupFilesAfterEnv: ['./.jest/jest.setup.ts']
+}
