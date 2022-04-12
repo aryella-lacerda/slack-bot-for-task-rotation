@@ -1,4 +1,4 @@
-const userIdentifier = /(?<=for).*/gm;
+const userIdentifier = /(?<=for).*/gm
 
 /**
  * @param command
@@ -7,5 +7,5 @@ const userIdentifier = /(?<=for).*/gm;
  * @returns A string containing the matched task, if found. Returns undefined otherwise.
  */
 export const extractTask = (command: string) => {
-  return command.match(userIdentifier)?.[0].trim();
-};
+  return command.match(userIdentifier)?.[0].trim()
+}

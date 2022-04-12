@@ -1,1 +1,1 @@
-export * from "./delete-rotation";
+export * from './delete-rotation'

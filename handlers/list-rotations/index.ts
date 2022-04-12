@@ -1,1 +1,1 @@
-export * from "./list-rotations";
+export * from './list-rotations'

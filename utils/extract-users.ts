@@ -1,4 +1,4 @@
-const userIdentifier = /@.?[^||>]*/gm;
+const userIdentifier = /@.?[^||>]*/gm
 
 /**
  * @param command
@@ -8,5 +8,5 @@ const userIdentifier = /@.?[^||>]*/gm;
  * @returns An array of matched identifiers, if found. Returns undefined otherwise.
  */
 export const extractUsers = (command: string) => {
-  return command.match(userIdentifier) ?? undefined;
-};
+  return command.match(userIdentifier) ?? undefined
+}

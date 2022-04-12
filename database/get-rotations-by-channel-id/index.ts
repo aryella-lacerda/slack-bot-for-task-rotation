@@ -1,1 +1,1 @@
-export * from "./get-rotations-by-channel-id";
+export * from './get-rotations-by-channel-id'

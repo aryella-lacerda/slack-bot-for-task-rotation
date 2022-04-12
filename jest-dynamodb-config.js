@@ -5,6 +5,6 @@ module.exports = async () => {
   return {
     tables,
     port: 8000,
-    options: ['-sharedDb']
+    options: ['-sharedDb'],
   }
 }
