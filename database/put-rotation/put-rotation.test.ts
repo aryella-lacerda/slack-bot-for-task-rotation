@@ -1,4 +1,4 @@
-import { getDynamoDBClient } from "./get-dynamodb-client";
+import { getDynamoDBClient } from "../get-dynamodb-client";
 import { GetCommand } from "@aws-sdk/lib-dynamodb";
 import { putRotation } from "./put-rotation";
 

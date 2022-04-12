@@ -1,5 +1,5 @@
-import rotations from "../seed/rotations.json";
-import { Rotation } from "../entities/rotation";
+import rotations from "../../seed/rotations.json";
+import { Rotation } from "../../entities/rotation";
 import { getRotationsByChannelId } from "./get-rotations-by-channel-id";
 import dayjs from "dayjs";
 
