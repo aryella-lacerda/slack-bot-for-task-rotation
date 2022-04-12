@@ -9,4 +9,7 @@ export const CHANNEL_NOT_FOUND_ERROR_ADVICE =
 export const UNEXPECTED_ERROR = "UNEXPECTED ERROR";
 export const UNEXPECTED_ERROR_ADVICE = "An error occurred. Please try again.";
 
+export const ROTATION_NOT_FOUND = "ROTATION NOT FOUND";
+export const ROTATION_DELETED = "ROTATION DELETED";
+
 export const ROTATION_LOG = "ROTATION";
