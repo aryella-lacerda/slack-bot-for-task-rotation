@@ -1,18 +1,19 @@
-import * as database from '../../database'
-import { UNEXPECTED_ERROR } from '../user-messages'
-import { startSlackApp } from '../start-slack-app'
+import * as database from '@database'
+import { UNEXPECTED_ERROR } from '@handlers/user-messages'
+import { startSlackApp } from '@handlers/start-slack-app'
 
 const { app } = startSlackApp()
 
 export const handler = async () => {
   if (process.env.IS_OFFLINE) {
     // @ts-expect-error //TODO: Add mock server later
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
     app.client.chat.postMessage = async () => {}
   }
 
   const rotations = await database.getAllRotations()
 
-  for (let rotation of rotations) {
+  for (const rotation of rotations) {
     try {
       const currentUser = rotation.next_user
       const currentUserIndex = rotation.user_list.indexOf(currentUser)
@@ -38,8 +39,9 @@ export const handler = async () => {
       })
 
       console.log('ROTATION ITEM UPDATED')
-    } catch (err) {
-      console.error(UNEXPECTED_ERROR, { err })
+    } catch (e) {
+      const error = e as Error
+      console.error(UNEXPECTED_ERROR, { error })
     }
   }
 }

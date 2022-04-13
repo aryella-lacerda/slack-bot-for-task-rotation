@@ -1,13 +1,12 @@
-import * as utils from '../../utils'
-import * as database from '../../database'
-import { startSlackApp } from '../start-slack-app'
-
+import * as utils from '@utils'
+import * as database from '@database'
+import { startSlackApp } from '@handlers/start-slack-app'
 import {
   UNEXPECTED_ERROR,
   UNEXPECTED_ERROR_ADVICE,
   CHANNEL_NOT_FOUND_ERROR,
   CHANNEL_NOT_FOUND_ERROR_ADVICE,
-} from '../user-messages'
+} from '@handlers/user-messages'
 
 const { app, awsLambdaReceiver } = startSlackApp()
 
@@ -20,14 +19,17 @@ app.command('/list-rotations', async ({ payload, ack, respond }) => {
     const userResponse = utils.formatRotationsList(rotations)
 
     await respond(userResponse) // visible only to user
+    await acknowledge()
+    return
+  } catch (e) {
+    const error = e as Error
 
-    return acknowledge()
-  } catch (err) {
-    if (err?.message?.includes(CHANNEL_NOT_FOUND_ERROR)) {
-      return acknowledge(CHANNEL_NOT_FOUND_ERROR_ADVICE)
+    if (error?.message?.includes(CHANNEL_NOT_FOUND_ERROR)) {
+      await acknowledge(CHANNEL_NOT_FOUND_ERROR_ADVICE)
+      return
     }
-    console.error(UNEXPECTED_ERROR, { err })
-    return acknowledge(UNEXPECTED_ERROR_ADVICE)
+    console.error(UNEXPECTED_ERROR, { error })
+    await acknowledge(UNEXPECTED_ERROR_ADVICE)
   }
 })
 

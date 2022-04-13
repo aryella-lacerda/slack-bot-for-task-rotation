@@ -1,6 +1,6 @@
 import rotations from '../../seed/rotations.json'
-import { Rotation } from '../../entities/rotation'
-import { getRotationsByChannelId } from './get-rotations-by-channel-id'
+import { Rotation } from '@entities'
+import { getRotationsByChannelId } from '@database/get-rotations-by-channel-id'
 import dayjs from 'dayjs'
 
 const sortByDate = (a: Rotation, b: Rotation) =>
@@ -15,7 +15,7 @@ it('should get all rotations linked to a channel id', async () => {
     (rotation) => rotation.channel_id === channel_id
   )
 
-  //Act
+  // Act
   const rotationsFound = await getRotationsByChannelId(channel_id)
 
   // Assert

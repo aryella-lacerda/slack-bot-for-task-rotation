@@ -1,6 +1,5 @@
 module.exports = {
   env: {
-    browser: true,
     es2021: true,
     jest: true,
   },
@@ -9,10 +8,25 @@ module.exports = {
     'prettier', // prettier should come last
   ],
   parser: '@typescript-eslint/parser',
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
+  plugins: ['@typescript-eslint', 'import'],
+  settings: {
+    // 'import/resolver': {
+    //   typescript: {},
+    // },
   },
-  plugins: ['@typescript-eslint'],
-  rules: {},
+  rules: {
+    camelcase: 'off',
+  },
+  overrides: [
+    {
+      files: ['*.ts', '*.tsx'],
+      extends: [
+        'plugin:@typescript-eslint/recommended',
+        'plugin:@typescript-eslint/recommended-requiring-type-checking',
+      ],
+      parserOptions: {
+        project: ['./tsconfig.json'],
+      },
+    },
+  ],
 }

@@ -1,4 +1,4 @@
-import { getDynamoDBClient } from '../get-dynamodb-client'
+import { getDynamoDBClient } from '@database/get-dynamodb-client'
 import { GetCommand } from '@aws-sdk/lib-dynamodb'
 import { putRotation } from './put-rotation'
 
@@ -18,10 +18,10 @@ it('should insert item into table', async () => {
     next_user: '@U02AMETS1UG',
   }
 
-  //Act
+  // Act
   await putRotation(item)
 
-  //Assert
+  // Assert
   const { Item } = await ddb.send(
     new GetCommand({
       TableName: process.env.ROTATIONS_TABLE,

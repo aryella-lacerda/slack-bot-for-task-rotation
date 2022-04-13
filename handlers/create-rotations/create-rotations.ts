@@ -1,6 +1,6 @@
-import * as utils from '../../utils'
-import * as database from '../../database'
-import { startSlackApp } from '../start-slack-app'
+import * as utils from '@utils'
+import * as database from '@database'
+import { startSlackApp } from '@handlers/start-slack-app'
 
 import {
   UNEXPECTED_ERROR,
@@ -10,7 +10,7 @@ import {
   CHANNEL_NOT_FOUND_ERROR,
   CHANNEL_NOT_FOUND_ERROR_ADVICE,
   ROTATION_LOG,
-} from '../user-messages'
+} from '@handlers/user-messages'
 
 const { app, awsLambdaReceiver } = startSlackApp()
 
@@ -23,7 +23,8 @@ app.command('/rotate', async ({ payload, ack, say, respond }) => {
 
     if (!users || !task) {
       console.error(INVALID_PARAMS_ERROR, { users, task })
-      return acknowledge(INVALID_PARAMS_ERROR_ADVICE)
+      await acknowledge(INVALID_PARAMS_ERROR_ADVICE)
+      return
     }
 
     const rotation = {
@@ -43,14 +44,18 @@ app.command('/rotate', async ({ payload, ack, say, respond }) => {
     await respond(userResponse) // visible only to user
     await say(channelResponse) // visible to everyone in channel
 
-    return acknowledge()
-  } catch (err) {
-    if (err?.message?.includes(CHANNEL_NOT_FOUND_ERROR)) {
-      return acknowledge(CHANNEL_NOT_FOUND_ERROR_ADVICE)
+    await acknowledge()
+    return
+  } catch (e) {
+    const error = e as Error
+
+    if (error?.message?.includes(CHANNEL_NOT_FOUND_ERROR)) {
+      await acknowledge(CHANNEL_NOT_FOUND_ERROR_ADVICE)
+      return
     }
 
-    console.error(UNEXPECTED_ERROR, { err })
-    return acknowledge(UNEXPECTED_ERROR_ADVICE)
+    console.error(UNEXPECTED_ERROR, { error })
+    await acknowledge(UNEXPECTED_ERROR_ADVICE)
   }
 })
 

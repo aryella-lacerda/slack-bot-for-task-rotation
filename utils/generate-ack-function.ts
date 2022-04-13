@@ -1,4 +1,6 @@
-export const generateAckFunction = (ack: Function) => (msg?: string) =>
+import { AckFn } from '@slack/bolt'
+
+export const generateAckFunction = (ack: AckFn<unknown>) => (msg?: string) =>
   ack(
     msg
       ? {

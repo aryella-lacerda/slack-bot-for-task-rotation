@@ -1,6 +1,15 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
     "esModuleInterop": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "paths": {
+      "@database": ["database"],
+      "@database/*": ["database/*"],
+      "@handlers/*": ["handlers/*"],
+      "@entities": ["entities"],
+      "@utils": ["utils"],
+      "@tests/*": [".jest/*"]
+    }
   }
 }

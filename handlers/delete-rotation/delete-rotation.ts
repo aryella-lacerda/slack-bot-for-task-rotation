@@ -1,13 +1,13 @@
-import * as utils from '../../utils'
-import * as database from '../../database'
-import { startSlackApp } from '../start-slack-app'
+import * as utils from '@utils'
+import * as database from '@database'
+import { startSlackApp } from '@handlers/start-slack-app'
 
 import {
   UNEXPECTED_ERROR,
   UNEXPECTED_ERROR_ADVICE,
   ROTATION_NOT_FOUND,
   ROTATION_DELETED,
-} from '../user-messages'
+} from '@handlers/user-messages'
 
 const { app, awsLambdaReceiver } = startSlackApp()
 
@@ -32,7 +32,8 @@ app.command('/delete-rotation', async ({ payload, ack, respond }) => {
           utils.formatRotationsList(rotationsInChannel)
       ) // visible only to user
 
-      return acknowledge()
+      await acknowledge()
+      return
     }
 
     await database.deleteRotation({
@@ -43,10 +44,12 @@ app.command('/delete-rotation', async ({ payload, ack, respond }) => {
     console.log(ROTATION_DELETED, rotationToDelete)
 
     await respond(`Rotation for *${task}* deleted successfully`) // visible only to user
-    return acknowledge()
-  } catch (err) {
-    console.error(UNEXPECTED_ERROR, { err })
-    return acknowledge(UNEXPECTED_ERROR_ADVICE)
+    await acknowledge()
+    return
+  } catch (e) {
+    const error = e as Error
+    console.error(UNEXPECTED_ERROR, { error })
+    await acknowledge(UNEXPECTED_ERROR_ADVICE)
   }
 })
 
