@@ -1,7 +1,10 @@
 import { GetCommand } from '@aws-sdk/lib-dynamodb'
-import { deleteRotation, MISSING_DELETE_PARAMS } from './delete-rotation'
+
 import { getDynamoDBClient } from '@database/get-dynamodb-client'
+
 import seed from '../../seed/rotations.json'
+
+import { deleteRotation, MISSING_DELETE_PARAMS } from './delete-rotation'
 
 const ddb = getDynamoDBClient()
 

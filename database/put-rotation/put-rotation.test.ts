@@ -1,5 +1,7 @@
-import { getDynamoDBClient } from '@database/get-dynamodb-client'
 import { GetCommand } from '@aws-sdk/lib-dynamodb'
+
+import { getDynamoDBClient } from '@database/get-dynamodb-client'
+
 import { putRotation } from './put-rotation'
 
 const ddb = getDynamoDBClient()

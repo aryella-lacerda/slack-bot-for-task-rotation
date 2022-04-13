@@ -1,13 +1,12 @@
-import * as utils from '@utils'
 import * as database from '@database'
 import { startSlackApp } from '@handlers/start-slack-app'
-
 import {
   UNEXPECTED_ERROR,
   UNEXPECTED_ERROR_ADVICE,
   ROTATION_NOT_FOUND,
   ROTATION_DELETED,
 } from '@handlers/user-messages'
+import * as utils from '@utils'
 
 const { app, awsLambdaReceiver } = startSlackApp()
 

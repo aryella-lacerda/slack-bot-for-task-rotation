@@ -1,5 +1,6 @@
-import { getDynamoDBClient } from '@database/get-dynamodb-client'
 import { DeleteCommand } from '@aws-sdk/lib-dynamodb'
+
+import { getDynamoDBClient } from '@database/get-dynamodb-client'
 
 const dynamodb = getDynamoDBClient()
 

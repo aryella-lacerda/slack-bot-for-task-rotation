@@ -1,4 +1,5 @@
 import { Rotation } from '../entities/rotation'
+
 import { formatUserMentions } from './format-user-mentions'
 
 export const FOOTER = `\n_You can create another rotation using the /rotate command or delete an existing rotation using the /delete-rotation command_`

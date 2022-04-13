@@ -1,4 +1,3 @@
-import * as utils from '@utils'
 import * as database from '@database'
 import { startSlackApp } from '@handlers/start-slack-app'
 import {
@@ -7,6 +6,7 @@ import {
   CHANNEL_NOT_FOUND_ERROR,
   CHANNEL_NOT_FOUND_ERROR_ADVICE,
 } from '@handlers/user-messages'
+import * as utils from '@utils'
 
 const { app, awsLambdaReceiver } = startSlackApp()
 

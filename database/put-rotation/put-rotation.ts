@@ -1,9 +1,9 @@
+import { PutCommand } from '@aws-sdk/lib-dynamodb'
 import dayjs from 'dayjs'
 import { v4 as uuid } from 'uuid'
-import { PutCommand } from '@aws-sdk/lib-dynamodb'
 
-import { Rotation } from '@entities'
 import { getDynamoDBClient } from '@database/get-dynamodb-client'
+import { Rotation } from '@entities'
 
 const dynamodb = getDynamoDBClient()
 

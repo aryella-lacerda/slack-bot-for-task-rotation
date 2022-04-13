@@ -16,6 +16,36 @@ module.exports = {
   },
   rules: {
     camelcase: 'off',
+    'import/order': [
+      'error',
+      {
+        groups: [
+          'builtin',
+          'external',
+          'internal',
+          'parent',
+          'sibling',
+          'index',
+        ],
+        pathGroups: [
+          {
+            pattern: '+(@database|@entities|@utils|@handlers|@tests)/**',
+            group: 'internal',
+            // position: 'before',
+          },
+          {
+            pattern: '+(@database|@entities|@utils|@handlers|@tests)',
+            group: 'internal',
+          },
+        ],
+        pathGroupsExcludedImportTypes: ['builtin'],
+        'newlines-between': 'always',
+        alphabetize: {
+          order: 'asc',
+          caseInsensitive: true,
+        },
+      },
+    ],
   },
   overrides: [
     {

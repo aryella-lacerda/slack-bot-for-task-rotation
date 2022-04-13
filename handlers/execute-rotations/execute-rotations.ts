@@ -1,6 +1,6 @@
 import * as database from '@database'
-import { UNEXPECTED_ERROR } from '@handlers/user-messages'
 import { startSlackApp } from '@handlers/start-slack-app'
+import { UNEXPECTED_ERROR } from '@handlers/user-messages'
 
 const { app } = startSlackApp()
 
