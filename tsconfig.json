@@ -5,11 +5,11 @@
     "resolveJsonModule": true,
     "noEmit": true,
     "paths": {
-      "@database": ["database"],
-      "@database/*": ["database/*"],
-      "@handlers/*": ["handlers/*"],
-      "@entities": ["entities"],
-      "@utils": ["utils"],
+      "@database": ["src/database"],
+      "@database/*": ["src/database/*"],
+      "@handlers/*": ["src/handlers/*"],
+      "@entities": ["src/entities"],
+      "@utils": ["src/utils"],
       "@tests/*": [".jest/*"],
       "@seeds/*": [".seeds/*"]
     }

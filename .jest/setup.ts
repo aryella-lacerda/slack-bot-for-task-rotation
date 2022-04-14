@@ -1,4 +1,4 @@
-import { getDynamoDB } from '../database/get-dynamodb-client'
+import { getDynamoDB } from '../src/database/get-dynamodb-client'
 import { deleteTables, createTables, getTablesFromServerless } from './utils'
 
 const dynamodb = getDynamoDB()

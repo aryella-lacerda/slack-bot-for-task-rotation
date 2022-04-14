@@ -52,28 +52,28 @@ provider:
 
 functions:
   createRotation:
-    handler: handlers/create-rotations.handler
+    handler: src/handlers/create-rotations.handler
     events:
       - http:
           path: slack/events
           method: post
 
   listRotations:
-    handler: handlers/list-rotations.handler
+    handler: src/handlers/list-rotations.handler
     events:
       - http:
           path: slack/events/rotations/list
           method: post
 
   deleteRotation:
-    handler: handlers/delete-rotation.handler
+    handler: src/handlers/delete-rotation.handler
     events:
       - http:
           path: slack/events/rotations/delete
           method: post
 
   executeRotation:
-    handler: handlers/execute-rotations.handler
+    handler: src/handlers/execute-rotations.handler
     events:
       - schedule: cron(0 12 ? * MON-FRI *)
 
