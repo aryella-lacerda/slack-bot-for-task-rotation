@@ -11,6 +11,7 @@
     "deploy:production": "yarn serverless deploy --stage production",
     "test": "yarn jest",
     "lint": "yarn eslint .",
+    "typecheck": "yarn tsc",
     "format": "yarn prettier --check .",
     "prepare": "husky install"
   },
