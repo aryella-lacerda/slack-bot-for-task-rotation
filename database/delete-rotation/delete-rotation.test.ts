@@ -2,6 +2,7 @@ import { GetCommand } from '@aws-sdk/lib-dynamodb'
 
 import { getDynamoDBClient } from '@database/get-dynamodb-client'
 import seed from '@seeds/rotations.json'
+import { seedTables } from '@tests/utils'
 
 import { deleteRotation, MISSING_DELETE_PARAMS } from './delete-rotation'
 
@@ -27,7 +28,13 @@ it('should throw an error if not passed a next_rotation_at timestamp', async () 
 
 it('should delete the given rotation if passed a rotation id', async () => {
   // Arrange
-  // --> The database is seeded in jest.setup.ts, this is the first item
+  await seedTables(ddb, [
+    {
+      table: process.env.ROTATIONS_TABLE,
+      items: seed,
+    },
+  ])
+
   const rotationToDelete = {
     id: seed[0].id,
     next_rotation_at: seed[0].next_rotation_at,

@@ -6,7 +6,7 @@ module.exports = {
     '@handlers/?(.*)': '<rootDir>/handlers/$1',
     '@entities/?(.*)': '<rootDir>/entities/$1',
     '@utils/?(.*)': '<rootDir>/utils/$1',
-    '@tests/?(.*)': '<rootDir>/tests/$1',
+    '@tests/?(.*)': '<rootDir>/.jest/$1',
     '@seeds/?(.*)': '<rootDir>/.seeds/$1',
   },
 }
