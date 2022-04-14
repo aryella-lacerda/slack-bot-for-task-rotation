@@ -1,4 +1,4 @@
-import rotations from '../../seed/rotations.json'
+import rotations from '@seeds/rotations.json'
 
 import { getAllRotations } from './get-all-rotations'
 

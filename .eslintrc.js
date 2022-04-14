@@ -29,12 +29,12 @@ module.exports = {
         ],
         pathGroups: [
           {
-            pattern: '+(@database|@entities|@utils|@handlers|@tests)/**',
+            pattern: '+(@database|@entities|@utils|@handlers|@tests|@seeds)/**',
             group: 'internal',
             // position: 'before',
           },
           {
-            pattern: '+(@database|@entities|@utils|@handlers|@tests)',
+            pattern: '+(@database|@entities|@utils|@handlers|@tests|@seeds)',
             group: 'internal',
           },
         ],

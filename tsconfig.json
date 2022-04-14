@@ -9,7 +9,8 @@
       "@handlers/*": ["handlers/*"],
       "@entities": ["entities"],
       "@utils": ["utils"],
-      "@tests/*": [".jest/*"]
+      "@tests/*": [".jest/*"],
+      "@seeds/*": [".seeds/*"]
     }
   }
 }

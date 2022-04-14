@@ -9,14 +9,14 @@ custom:
       - staging
       - development
     start:
-      port: 8000
+      port: 8001
       migrate: true
       seed: true
     seed:
       test:
         sources:
           - table: 'rotations-${sls:stage}'
-            sources: [./seed/rotations.json]
+            sources: [./.seeds/rotations.json]
   stages:
     - development
     - staging

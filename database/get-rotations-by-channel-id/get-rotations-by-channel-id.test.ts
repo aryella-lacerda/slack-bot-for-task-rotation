@@ -2,8 +2,7 @@ import dayjs from 'dayjs'
 
 import { getRotationsByChannelId } from '@database/get-rotations-by-channel-id'
 import { Rotation } from '@entities'
-
-import rotations from '../../seed/rotations.json'
+import rotations from '@seeds/rotations.json'
 
 const sortByDate = (a: Rotation, b: Rotation) =>
   dayjs(a.created_at).unix() - dayjs(b.created_at).unix()
