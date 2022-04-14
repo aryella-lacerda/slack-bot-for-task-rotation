@@ -1,22 +1,22 @@
 service: slack-bot-for-task-rotation
-frameworkVersion: "2 || 3"
+frameworkVersion: '2 || 3'
 
 custom:
-  tableName: "rotations-${sls:stage}"
+  tableName: 'rotations-${sls:stage}'
   dynamodb:
     # Accepted stages must be whitelisted for DynamoDB Local
     stages:
       - staging
       - development
     start:
-      port: 8000
+      port: 8001
       migrate: true
       seed: true
     seed:
       test:
         sources:
-          - table: "rotations-${sls:stage}"
-            sources: [./seed/rotations.json]
+          - table: 'rotations-${sls:stage}'
+            sources: [./.seeds/rotations.json]
   stages:
     - development
     - staging
@@ -32,7 +32,7 @@ plugins:
 provider:
   name: aws
   runtime: nodejs12.x
-  lambdaHashingVersion: "20201221"
+  lambdaHashingVersion: '20201221'
   iam:
     role:
       statements:
@@ -52,28 +52,28 @@ provider:
 
 functions:
   createRotation:
-    handler: handlers/create-rotations.handler
+    handler: src/handlers/create-rotation.handler
     events:
       - http:
-          path: slack/events
+          path: slack/events/rotations/create
           method: post
 
   listRotations:
-    handler: handlers/list-rotations.handler
+    handler: src/handlers/list-rotations.handler
     events:
       - http:
           path: slack/events/rotations/list
           method: post
 
   deleteRotation:
-    handler: handlers/delete-rotation.handler
+    handler: src/handlers/delete-rotation.handler
     events:
       - http:
           path: slack/events/rotations/delete
           method: post
 
-  executeRotation:
-    handler: handlers/execute-rotations.handler
+  executeRotations:
+    handler: src/handlers/execute-rotations.handler
     events:
       - schedule: cron(0 12 ? * MON-FRI *)
 
@@ -97,12 +97,12 @@ resources:
           - AttributeName: next_rotation_at
             KeyType: RANGE
         GlobalSecondaryIndexes:
-          - IndexName: "ByChannelId"
+          - IndexName: 'ByChannelId'
             KeySchema:
-              - AttributeName: "channel_id"
-                KeyType: "HASH"
+              - AttributeName: 'channel_id'
+                KeyType: 'HASH'
             Projection:
-              ProjectionType: "ALL"
+              ProjectionType: 'ALL'
             ProvisionedThroughput:
               ReadCapacityUnits: 1
               WriteCapacityUnits: 1

@@ -1,10 +1,10 @@
 module.exports = async () => {
-  const { getDynamoDBTables } = require("./.jest/get-dynamodb-tables");
-  const tables = await getDynamoDBTables();
+  const { getTablesFromServerless } = require('./.jest/utils')
+  const tables = await getTablesFromServerless()
 
   return {
     tables,
     port: 8000,
-    options: ["-sharedDb"],
-  };
-};
+    options: ['-sharedDb'],
+  }
+}
