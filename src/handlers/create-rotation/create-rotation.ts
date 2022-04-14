@@ -13,6 +13,8 @@ import * as utils from '@utils'
 
 const { app, awsLambdaReceiver } = startSlackApp()
 
+// /rotate @user1, @user2 for a certain task
+// /create-rotation for a certain task with @user1, @user2
 app.command('/rotate', async ({ payload, ack, say, respond }) => {
   const acknowledge = utils.generateAckFunction(ack)
 
