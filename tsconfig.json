@@ -3,10 +3,10 @@
     "baseUrl": ".",
     "esModuleInterop": true,
     "resolveJsonModule": true,
-    "noEmit": true,
+    "outDir": ".build",
     "paths": {
-      "@database": ["src/database"],
       "@database/*": ["src/database/*"],
+      "@database": ["src/database"],
       "@handlers/*": ["src/handlers/*"],
       "@entities": ["src/entities"],
       "@utils": ["src/utils"],

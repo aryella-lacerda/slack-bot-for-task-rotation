@@ -24,6 +24,7 @@ custom:
 
 plugins:
   - serverless-plugin-typescript
+  - serverless-tscpaths
   - serverless-dynamodb-local
   - serverless-offline
   - serverless-dotenv-plugin
@@ -52,28 +53,28 @@ provider:
 
 functions:
   createRotation:
-    handler: src/handlers/create-rotation.handler
+    handler: src/handlers/create-rotation/index.handler
     events:
       - http:
           path: slack/events/rotations/create
           method: post
 
   listRotations:
-    handler: src/handlers/list-rotations.handler
+    handler: src/handlers/list-rotations/index.handler
     events:
       - http:
           path: slack/events/rotations/list
           method: post
 
   deleteRotation:
-    handler: src/handlers/delete-rotation.handler
+    handler: src/handlers/delete-rotation/index.handler
     events:
       - http:
           path: slack/events/rotations/delete
           method: post
 
   executeRotations:
-    handler: src/handlers/execute-rotations.handler
+    handler: src/handlers/execute-rotations/index.handler
     events:
       - schedule: cron(0 12 ? * MON-FRI *)
 
