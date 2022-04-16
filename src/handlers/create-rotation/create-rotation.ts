@@ -3,8 +3,8 @@ import { startSlackApp } from '@handlers/start-slack-app'
 import {
   UNEXPECTED_ERROR,
   UNEXPECTED_ERROR_ADVICE,
-  INVALID_PARAMS_ERROR,
-  INVALID_PARAMS_ERROR_ADVICE,
+  CREATE_ROTATION_INVALID_PARAMS_ERROR,
+  CREATE_ROTATION_INVALID_PARAMS_ERROR_ADVICE,
   CHANNEL_NOT_FOUND_ERROR,
   CHANNEL_NOT_FOUND_ERROR_ADVICE,
   ROTATION_LOG,
@@ -22,8 +22,8 @@ app.command('/create-rotation', async ({ payload, ack, say, respond }) => {
     const task = utils.extractTask(payload.text)
 
     if (!users || !task) {
-      console.error(INVALID_PARAMS_ERROR, { users, task })
-      await acknowledge(INVALID_PARAMS_ERROR_ADVICE)
+      console.error(CREATE_ROTATION_INVALID_PARAMS_ERROR, { users, task })
+      await acknowledge(CREATE_ROTATION_INVALID_PARAMS_ERROR_ADVICE)
       return
     }
 

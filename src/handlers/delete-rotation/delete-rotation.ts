@@ -18,9 +18,9 @@ app.command('/delete-rotation', async ({ payload, ack, respond }) => {
     const task = utils.extractTask(payload.text)
 
     const rotationsInChannel = await database.getRotationsByChannelId(channelID)
-
-    const rotationToDelete = rotationsInChannel.find(
-      (rotation) => rotation.task.toLowerCase() === task.toLowerCase()
+    const rotationToDelete = utils.filterRotationsByTask(
+      rotationsInChannel,
+      task
     )
 
     if (!rotationToDelete) {
