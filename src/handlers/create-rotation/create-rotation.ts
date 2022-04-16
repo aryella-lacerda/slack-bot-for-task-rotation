@@ -13,12 +13,11 @@ import * as utils from '@utils'
 
 const { app, awsLambdaReceiver } = startSlackApp()
 
-// /rotate @user1, @user2 for a certain task
-// /create-rotation for a certain task with @user1, @user2
-app.command('/rotate', async ({ payload, ack, say, respond }) => {
+app.command('/create-rotation', async ({ payload, ack, say, respond }) => {
   const acknowledge = utils.generateAckFunction(ack)
 
   try {
+    console.log(payload)
     const users = utils.extractUsers(payload.text)
     const task = utils.extractTask(payload.text)
 
@@ -40,7 +39,7 @@ app.command('/rotate', async ({ payload, ack, say, respond }) => {
 
     const listOfUserMentions = utils.formatUserMentions(users)
     const userResponse = 'Rotation created! 🎉'
-    const channelResponse = `set up a daily rotation for ${task}, containing: ${listOfUserMentions}`
+    const channelResponse = `<@${payload.user_id}> set up a daily rotation for *${task}* with ${listOfUserMentions}`
 
     await respond(userResponse) // visible only to user
     await say(channelResponse) // visible to everyone in channel

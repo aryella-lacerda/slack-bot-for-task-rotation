@@ -1,6 +1,6 @@
 export const INVALID_PARAMS_ERROR = 'INVALID PARAMS'
 export const INVALID_PARAMS_ERROR_ADVICE =
-  "Invalid command parameters. Please use template: /rotate a list of users for a task. Example: '/rotate @user1, @user2, and @user3 for daily meeting host'."
+  'Invalid command parameters. Try something like: _/create-rotation with @user1, @user2, and @user3 for daily meeting host_'
 
 export const CHANNEL_NOT_FOUND_ERROR = 'channel_not_found'
 export const CHANNEL_NOT_FOUND_ERROR_ADVICE =

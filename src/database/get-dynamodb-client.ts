@@ -7,7 +7,7 @@ const isOffline = process.env.IS_OFFLINE
 const devOptions = {
   region: 'local-env',
   sslEnabled: false,
-  endpoint: 'http://localhost:8000',
+  endpoint: 'http://localhost:8001',
   credentials: {
     accessKeyId: 'DEFAULT_ACCESS_KEY',
     secretAccessKey: 'DEFAULT_SECRET',
