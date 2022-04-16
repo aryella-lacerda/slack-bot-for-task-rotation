@@ -1,6 +1,10 @@
-export const INVALID_PARAMS_ERROR = 'INVALID PARAMS'
-export const INVALID_PARAMS_ERROR_ADVICE =
+export const CREATE_ROTATION_INVALID_PARAMS_ERROR = 'INVALID PARAMS'
+export const CREATE_ROTATION_INVALID_PARAMS_ERROR_ADVICE =
   'Invalid command parameters. Try something like: _/create-rotation with @user1, @user2, and @user3 for daily meeting host_'
+
+export const ROTATE_INVALID_PARAMS_ERROR = 'INVALID PARAMS'
+export const ROTATE_INVALID_PARAMS_ERROR_ADVICE =
+  'Invalid command parameters. Use _/list-rotations_ to see the rotations in this channel and then try something like: _/rotate a given task_'
 
 export const CHANNEL_NOT_FOUND_ERROR = 'channel_not_found'
 export const CHANNEL_NOT_FOUND_ERROR_ADVICE =
