@@ -1,3 +1,5 @@
+import { RotationFrequency } from '@constants'
+
 import { filterRotationsByTask } from './filter-rotations-by-task'
 
 const rotations = [
@@ -9,6 +11,7 @@ const rotations = [
     user_list: ['@U02AMETS1UG', '@U01G65M5LQ4', '@U02FVLR9AE9'],
     channel_id: 'C0339UGLTHS',
     next_user: '@U02AMETS1UG',
+    frequency: RotationFrequency.EVERY_DAY,
   },
   {
     id: 'a5aa1829-98f2-495f-830c-0aec046ad468',
@@ -18,6 +21,7 @@ const rotations = [
     user_list: ['@U02PD4Y3ACR', '@U02AMETS1UG'],
     channel_id: 'C0339UGLTHS',
     next_user: '@U02PD4Y3ACR',
+    frequency: RotationFrequency.EVERY_DAY,
   },
   {
     id: '03ce1f90-5a9c-1234-567a-8e4a4892896f',
@@ -27,6 +31,7 @@ const rotations = [
     user_list: ['@U02PD4Y3ACR', '@U02AMETS1UG'],
     channel_id: 'C0123ABCDEF',
     next_user: '@U02PD4Y3ACR',
+    frequency: RotationFrequency.EVERY_DAY,
   },
 ]
 

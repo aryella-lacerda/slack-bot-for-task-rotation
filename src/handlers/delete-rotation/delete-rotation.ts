@@ -35,10 +35,7 @@ app.command('/delete-rotation', async ({ payload, ack, respond }) => {
       return
     }
 
-    await database.deleteRotation({
-      id: rotationToDelete.id,
-      next_rotation_at: rotationToDelete.next_rotation_at,
-    })
+    await database.deleteRotation(rotationToDelete.id)
 
     console.log(ROTATION_DELETED, rotationToDelete)
 

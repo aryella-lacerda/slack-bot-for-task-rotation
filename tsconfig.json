@@ -9,6 +9,7 @@
       "@database": ["src/database"],
       "@handlers/*": ["src/handlers/*"],
       "@entities": ["src/entities"],
+      "@constants": ["src/constants"],
       "@utils": ["src/utils"],
       "@tests/*": [".jest/*"],
       "@seeds/*": [".seeds/*"]

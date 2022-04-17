@@ -11,7 +11,11 @@ import {
 } from '@handlers/user-messages'
 import * as utils from '@utils'
 
+import { configureRotationBlocks } from './configure-rotation-blocks'
+
 const { app, awsLambdaReceiver } = startSlackApp()
+
+//   text: 'for some task for <@U02AMETS1UG|aryella.lacerda> and <@U02PD4Y3ACR|felipe.augusto>',
 
 app.command('/create-rotation', async ({ payload, ack, say, respond }) => {
   const acknowledge = utils.generateAckFunction(ack)
@@ -27,23 +31,23 @@ app.command('/create-rotation', async ({ payload, ack, say, respond }) => {
       return
     }
 
-    const rotation = {
+    const rotation = await database.putRotation({
       task,
       user_list: users,
       next_user: users[0],
       channel_id: payload.channel_id,
-    }
+    })
 
     console.log(ROTATION_LOG, { rotation })
-    await database.putRotation(rotation)
-
     const listOfUserMentions = utils.formatUserMentions(users)
-    const userResponse = 'Rotation created! 🎉'
-    const channelResponse = `<@${payload.user_id}> set up a daily rotation for *${task}* with ${listOfUserMentions}`
+    // const userResponse = 'Rotation created! 🎉'
+    const channelResponse = `<@${payload.user_id}> set up a rotation for *${task}* with ${listOfUserMentions}`
 
-    await respond(userResponse) // visible only to user
+    await respond({
+      blocks: configureRotationBlocks(rotation),
+    }) // visible only to user
+
     await say(channelResponse) // visible to everyone in channel
-
     await acknowledge()
     return
   } catch (e) {
