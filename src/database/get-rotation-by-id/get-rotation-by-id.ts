@@ -1,6 +1,7 @@
 import { GetCommand } from '@aws-sdk/lib-dynamodb'
 
 import { getDynamoDBClient } from '@database/get-dynamodb-client'
+import { Rotation } from '@entities'
 
 const dynamodb = getDynamoDBClient()
 
@@ -20,5 +21,5 @@ export const getRotationById = async (id: string) => {
     })
   )
 
-  return Item
+  return Item as Rotation
 }

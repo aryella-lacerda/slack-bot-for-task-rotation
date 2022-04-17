@@ -5,17 +5,23 @@ import { v4 as uuid } from 'uuid'
 
 import { getDynamoDBClient } from '@database/get-dynamodb-client'
 import { Rotation } from '@entities'
+import * as utils from '@utils'
 
 const dynamodb = getDynamoDBClient()
 
-export const putRotation = async (
-  rotation: Pick<Rotation, 'task' | 'user_list' | 'channel_id' | 'next_user'>
-) => {
+export const putRotation = async (rotation: Partial<Rotation>) => {
   const item: Rotation = {
+    // Default values
     id: uuid(),
     created_at: dayjs().toISOString(),
-    next_rotation_at: dayjs().add(1, 'day').toISOString(),
+    next_rotation_at: utils.roundToNearestHour().add(1, 'day').toISOString(),
     frequency: RotationFrequency.EVERY_DAY,
+    task: '',
+    user_list: [],
+    channel_id: '',
+    next_user: '',
+
+    // Overwrite relevant keys
     ...rotation,
   }
 

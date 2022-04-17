@@ -59,6 +59,13 @@ functions:
           path: slack/events/rotations/create
           method: post
 
+  selectRotationFrequency:
+    handler: src/handlers/select-rotation-frequency/index.handler
+    events:
+      - http:
+          path: slack/actions
+          method: post
+
   listRotations:
     handler: src/handlers/list-rotations/index.handler
     events:
