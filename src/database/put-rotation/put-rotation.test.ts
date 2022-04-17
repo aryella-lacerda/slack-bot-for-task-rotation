@@ -27,7 +27,7 @@ it('should insert item into table', async () => {
   const { Item } = await ddb.send(
     new GetCommand({
       TableName: process.env.ROTATIONS_TABLE,
-      Key: { id, next_rotation_at },
+      Key: { id },
     })
   )
 

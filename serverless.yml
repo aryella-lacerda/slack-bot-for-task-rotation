@@ -102,12 +102,19 @@ resources:
         KeySchema:
           - AttributeName: id
             KeyType: HASH
-          - AttributeName: next_rotation_at
-            KeyType: RANGE
         GlobalSecondaryIndexes:
           - IndexName: 'ByChannelId'
             KeySchema:
               - AttributeName: 'channel_id'
+                KeyType: 'HASH'
+            Projection:
+              ProjectionType: 'ALL'
+            ProvisionedThroughput:
+              ReadCapacityUnits: 1
+              WriteCapacityUnits: 1
+          - IndexName: 'ByNextRotationAt'
+            KeySchema:
+              - AttributeName: 'next_rotation_at'
                 KeyType: 'HASH'
             Projection:
               ProjectionType: 'ALL'
