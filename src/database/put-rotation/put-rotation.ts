@@ -1,4 +1,5 @@
 import { PutCommand } from '@aws-sdk/lib-dynamodb'
+import { RotationFrequency } from '@constants'
 import dayjs from 'dayjs'
 import { v4 as uuid } from 'uuid'
 
@@ -14,6 +15,7 @@ export const putRotation = async (
     id: uuid(),
     created_at: dayjs().toISOString(),
     next_rotation_at: dayjs().add(1, 'day').toISOString(),
+    frequency: RotationFrequency.EVERY_DAY,
     ...rotation,
   }
 

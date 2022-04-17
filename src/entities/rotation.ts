@@ -1,3 +1,7 @@
+import { RotationFrequency } from '@constants'
+
+type ValueOf<T> = T[keyof T]
+
 export type Rotation = {
   id: string
   created_at: string
@@ -6,4 +10,5 @@ export type Rotation = {
   user_list: string[]
   channel_id: string
   next_user: string
+  frequency: ValueOf<typeof RotationFrequency>
 }

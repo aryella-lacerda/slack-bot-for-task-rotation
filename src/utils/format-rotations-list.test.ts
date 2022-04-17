@@ -1,6 +1,8 @@
+import { Rotation } from '@entities'
+
 import { formatRotationsList, FOOTER } from './format-rotations-list'
 
-const testRotations = [
+const testRotations: Rotation[] = [
   {
     id: '03ce1f90-5a9c-4658-8a53-8e4a4892896f',
     created_at: '2022-03-30T11:22:06.082Z',
@@ -9,6 +11,7 @@ const testRotations = [
     user_list: ['@U02AMETS1UG', '@U01G65M5LQ4', '@U02FVLR9AE9'],
     channel_id: 'C0339UGLTHS',
     next_user: '@U02AMETS1UG',
+    frequency: 1,
   },
   {
     id: 'a5aa1829-98f2-495f-830c-0aec046ad468',
@@ -18,6 +21,7 @@ const testRotations = [
     user_list: ['@U02PD4Y3ACR', '@U02AMETS1UG'],
     channel_id: 'C0339UGLTHS',
     next_user: '@U02PD4Y3ACR',
+    frequency: 1,
   },
   {
     id: '03ce1f90-5a9c-1234-567a-8e4a4892896f',
@@ -27,6 +31,7 @@ const testRotations = [
     user_list: ['@U02PD4Y3ACR', '@U02AMETS1UG'],
     channel_id: 'C0123ABCDEF',
     next_user: '@U02PD4Y3ACR',
+    frequency: 1,
   },
 ]
 

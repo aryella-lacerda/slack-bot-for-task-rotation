@@ -18,6 +18,7 @@ it('should insert item into table', async () => {
     user_list: ['@U02AMETS1UG', '@U01G65M5LQ4', '@U02FVLR9AE9'],
     channel_id: 'C0339UGLTHS',
     next_user: '@U02AMETS1UG',
+    frequency: 1,
   }
 
   // Act
