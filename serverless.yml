@@ -47,9 +47,15 @@ provider:
             - dynamodb:DeleteItem
           Resource:
             - Fn::GetAtt: [RotationsTable, Arn]
+            - Fn::Join:
+                - '/'
+                -
+                  - Fn::GetAtt: [RotationsTable, Arn]
+                  - 'index/*'
+
   environment:
     ROTATIONS_TABLE: ${self:custom.tableName}
-    IS_OFFLINE: true
+    IS_OFFLINE: false
 
 functions:
   createRotation:

@@ -2,7 +2,7 @@ import { DynamoDB, DynamoDBClient } from '@aws-sdk/client-dynamodb'
 import { DynamoDBDocumentClient } from '@aws-sdk/lib-dynamodb'
 
 const isTest = process.env.JEST_WORKER_ID
-const isOffline = process.env.IS_OFFLINE
+const isOffline = process.env.IS_OFFLINE === 'true'
 
 const devOptions = {
   region: 'local-env',
